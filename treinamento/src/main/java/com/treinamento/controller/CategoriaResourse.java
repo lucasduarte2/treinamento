@@ -35,7 +35,7 @@ public class CategoriaResourse {
 	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) throws IOException {
 		Categoria categoria = this.categoriaService.buscarPorId(id);
 		if (categoria == null) {
-			throw new IOException();
+			throw new RuntimeException();
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(categoria);
 	}
