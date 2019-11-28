@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.treinamento.error.RestExceptionHandler;
 import com.treinamento.model.Categoria;
 import com.treinamento.repository.CategoriaRepository;
 
@@ -19,36 +17,36 @@ public class CategoriaService {
 	public List<Categoria> listar() {
 		return this.categoriaRepository.findAll();
 	}
-	
+
 	public Categoria buscarPorId(Long id) {
 		Optional<Categoria> categoriaNoBanco = this.categoriaRepository.findById(id);
-		if(categoriaNoBanco.isPresent()) {
+		if (categoriaNoBanco.isPresent()) {
 			return categoriaNoBanco.get();
 		}
-		return categoriaNoBanco.get();
+		return null;
 	}
 
-	public  Categoria cadastrarCategoria(Categoria categoria) throws Exception {
+	public Categoria cadastrarCategoria(Categoria categoria) throws Exception {
 		return this.categoriaRepository.save(categoria);
 	}
 
 	public Categoria deletarCategoria(Long id) {
 		Optional<Categoria> categoriaNoBanco = this.categoriaRepository.findById(id);
-		if(categoriaNoBanco.isPresent()) {
+		if (categoriaNoBanco.isPresent()) {
 			this.categoriaRepository.delete(categoriaNoBanco.get());
 			return categoriaNoBanco.get();
 		}
-		return categoriaNoBanco.get();
+		return null;
 	}
-	
+
 	public Categoria atualizarCategoria(Long id, Categoria categoria) {
 		Optional<Categoria> categoriaNoBanco = this.categoriaRepository.findById(id);
-		if(categoriaNoBanco.isPresent()) {
+		if (categoriaNoBanco.isPresent()) {
 			categoria.setCodigo(categoriaNoBanco.get().getCodigo());
 			return this.categoriaRepository.save(categoria);
 		}
-		
-		return categoriaNoBanco.get();
+
+		return null;
 	}
 
 }

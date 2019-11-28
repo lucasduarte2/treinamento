@@ -2,7 +2,6 @@ package com.treinamento.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,11 +30,11 @@ public class CategoriaResourse {
 		List<Categoria> categorias = this.categoriaService.listar();
 		return ResponseEntity.status(HttpStatus.OK).body(categorias);
 	}
-	
+
 	@GetMapping("{id}")
 	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) throws IOException {
 		Categoria categoria = this.categoriaService.buscarPorId(id);
-		if(categoria == null) {
+		if (categoria == null) {
 			throw new IOException();
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(categoria);
@@ -43,10 +42,10 @@ public class CategoriaResourse {
 
 	@PostMapping
 	public ResponseEntity<Categoria> cadastrarCategoria(@RequestBody Categoria categoria) throws Exception {
-		if(categoria.getNome() == null || categoria.getNome().trim() == "") {
-			 throw new Exception();
+		if (categoria.getNome() == null || categoria.getNome().trim() == "") {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
-		
+
 		Categoria novaCategoria = this.categoriaService.cadastrarCategoria(categoria);
 		return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
 	}
@@ -54,21 +53,21 @@ public class CategoriaResourse {
 	@DeleteMapping("{id}")
 	public ResponseEntity<Categoria> deletarCategoria(@PathVariable Long id) {
 		Categoria categoriaDeletada = this.categoriaService.deletarCategoria(id);
-		if(categoriaDeletada == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+		if (categoriaDeletada == null) {
+			throw new RuntimeException();
 		}
-		
-		return  ResponseEntity.status(HttpStatus.OK).body(categoriaDeletada);
+
+		return ResponseEntity.status(HttpStatus.OK).body(categoriaDeletada);
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id,@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
 		Categoria categoriaAtualizada = this.categoriaService.atualizarCategoria(id, categoria);
-		if(categoriaAtualizada == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+		if (categoriaAtualizada == null) {
+			throw new RuntimeException();
 		}
-		
-		return  ResponseEntity.status(HttpStatus.OK).body(categoria);
+
+		return ResponseEntity.status(HttpStatus.OK).body(categoria);
 	}
 
 }
