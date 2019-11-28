@@ -26,7 +26,7 @@ public class CategoriaService {
 		return null;
 	}
 
-	public Categoria cadastrarCategoria(Categoria categoria) throws Exception {
+	public Categoria cadastrarCategoria(Categoria categoria) {
 		return this.categoriaRepository.save(categoria);
 	}
 
