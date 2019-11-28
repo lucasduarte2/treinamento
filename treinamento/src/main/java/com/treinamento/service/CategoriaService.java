@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.treinamento.error.ResourceNotFoundException;
+import com.treinamento.error.RestExceptionHandler;
 import com.treinamento.model.Categoria;
 import com.treinamento.repository.CategoriaRepository;
 
@@ -20,14 +20,15 @@ public class CategoriaService {
 		return this.categoriaRepository.findAll();
 	}
 	
-	public Optional<Categoria> buscarPorId(Long id) {
-		return this.categoriaRepository.findById(id);
+	public Categoria buscarPorId(Long id) {
+		Optional<Categoria> categoriaNoBanco = this.categoriaRepository.findById(id);
+		if(categoriaNoBanco.isPresent()) {
+			return categoriaNoBanco.get();
+		}
+		return categoriaNoBanco.get();
 	}
 
-	public  Categoria cadastrarCategoria(Categoria categoria) {
-		if(categoria == null) {
-			return null;
-		}
+	public  Categoria cadastrarCategoria(Categoria categoria) throws Exception {
 		return this.categoriaRepository.save(categoria);
 	}
 

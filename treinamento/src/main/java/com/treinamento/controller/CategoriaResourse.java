@@ -1,5 +1,6 @@
 package com.treinamento.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,23 +33,24 @@ public class CategoriaResourse {
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) {
-		Optional<Categoria> categoria = this.categoriaService.buscarPorId(id);
+	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) throws IOException {
+		Categoria categoria = this.categoriaService.buscarPorId(id);
 		if(categoria == null) {
-			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+			throw new IOException();
 		}
-		return   ResponseEntity.status(HttpStatus.OK).body(categoria.get());
+		return ResponseEntity.status(HttpStatus.OK).body(categoria);
 	}
 
 	@PostMapping
-	public ResponseEntity<Categoria> cadastrarCategoria(@RequestBody Categoria categoria) {
-		Categoria novaCategoria = this.categoriaService.cadastrarCategoria(categoria);
-		if(novaCategoria == null) {
-			return  ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+	public ResponseEntity<Categoria> cadastrarCategoria(@RequestBody Categoria categoria) throws Exception {
+		if(categoria.getNome() == null || categoria.getNome().trim() == "") {
+			 throw new Exception();
 		}
+		
+		Categoria novaCategoria = this.categoriaService.cadastrarCategoria(categoria);
 		return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
 	}
-	
+
 	@DeleteMapping("{id}")
 	public ResponseEntity<Categoria> deletarCategoria(@PathVariable Long id) {
 		Categoria categoriaDeletada = this.categoriaService.deletarCategoria(id);
