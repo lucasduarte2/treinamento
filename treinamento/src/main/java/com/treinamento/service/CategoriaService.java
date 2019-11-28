@@ -26,7 +26,7 @@ public class CategoriaService {
 
 	public  Categoria cadastrarCategoria(Categoria categoria) {
 		if(categoria == null) {
-			throw new ResourceNotFoundException("Error");
+			return null;
 		}
 		return this.categoriaRepository.save(categoria);
 	}

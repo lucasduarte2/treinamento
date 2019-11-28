@@ -31,12 +31,11 @@ public class CategoriaResourse {
 		return ResponseEntity.status(HttpStatus.OK).body(categorias);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@GetMapping("{id}")
 	public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) {
 		Optional<Categoria> categoria = this.categoriaService.buscarPorId(id);
 		if(categoria == null) {
-			return  (ResponseEntity<Categoria>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 		return   ResponseEntity.status(HttpStatus.OK).body(categoria.get());
 	}
@@ -44,27 +43,27 @@ public class CategoriaResourse {
 	@PostMapping
 	public ResponseEntity<Categoria> cadastrarCategoria(@RequestBody Categoria categoria) {
 		Categoria novaCategoria = this.categoriaService.cadastrarCategoria(categoria);
+		if(novaCategoria == null) {
+			return  ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@DeleteMapping("{id}")
 	public ResponseEntity<Categoria> deletarCategoria(@PathVariable Long id) {
 		Categoria categoriaDeletada = this.categoriaService.deletarCategoria(id);
 		if(categoriaDeletada == null) {
-			return (ResponseEntity<Categoria>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
 		
 		return  ResponseEntity.status(HttpStatus.OK).body(categoriaDeletada);
 	}
 	
-	
-	@SuppressWarnings("unchecked")
 	@PutMapping("/{id}")
 	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id,@RequestBody Categoria categoria) {
 		Categoria categoriaAtualizada = this.categoriaService.atualizarCategoria(id, categoria);
 		if(categoriaAtualizada == null) {
-			return (ResponseEntity<Categoria>) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
 		
 		return  ResponseEntity.status(HttpStatus.OK).body(categoria);
