@@ -56,5 +56,13 @@ public class PessoaResourse {
 		Pessoa pessoaAtualizada = this.pessoaService.atualizarPessoa(id, pessoa);
 		return pessoaAtualizada != null ? ResponseEntity.ok(pessoaAtualizada) : ResponseEntity.notFound().build();
 	}
+	
+	@PutMapping("/{id}/ativo")
+	public ResponseEntity<Pessoa> atualizarPessoa(@PathVariable Long id, @RequestBody @Valid Boolean ativo) {
+		Pessoa pessoaAtiva = this.pessoaService.atualizarPropriedadeAtivo(id, ativo);
+		return pessoaAtiva != null ? ResponseEntity.ok(pessoaAtiva) : ResponseEntity.notFound().build();
+	}
+	
+	
 
 }
