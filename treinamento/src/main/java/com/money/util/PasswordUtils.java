@@ -6,6 +6,6 @@ public class PasswordUtils {
 
 	public static void main(String[] args) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.print(encoder.encode("admin"));
+		System.out.print(encoder.encode("lucas"));
 	}
 }
