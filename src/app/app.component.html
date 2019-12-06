@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>{{appTitle}}</span>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<section class="container main-content" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="15px"
+  fxLayoutGap.xs="0">
+  <div fxFlex="20%">
+    <div *ngIf="!(futuro | async)?.list.length; else categoryListComponent">
+      <p id="no-content">Oi! Aguarde alguns segundos enquanto carregamos suas categorias.</p>
+    </div>
+
+    <ng-template #categoryListComponent>
+      <!-- lista de categorias -->
+      <div>
+        <stf-category-list [categoryList]="(futuro | async)?.list"></stf-category-list>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- formulário de categorias -->
+  <div class="article-area" fxFlex>
+    <stf-category-detail></stf-category-detail>
+  </div>
+</section>
